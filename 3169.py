@@ -1,0 +1,5 @@
+lst = input().split()
+k, c = input().split()
+k = int(k)
+lst.insert(k, c)
+print(*lst)
