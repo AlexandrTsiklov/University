@@ -1,17 +1,42 @@
 students_dict = {}
-print('Формат: Фамилия Имя БалФизика БаллИстория БаллРусский')
 student = list(input().split())
+s = {'Физика', 'История', 'Русский'}
+people = {}
 
-m = -1
 while student:
-    students_dict[student[0] + ' ' + student[1]] = (int(student[2]), int(student[3]), int(student[4]))
-    sm = sum(map(int, (student[2], student[3], student[4])))
-    if sm > m:
-        m = sm
+    number = 1
+    name, surname = student[0], student[1]
+    if (name + ' ' + surname) not in students_dict:
+        students_dict[name + ' ' + surname] = {}
+    students_dict[name + ' ' + surname]['id'] = f'{str(number)}_{surname[0]}_{len(name)}'
+    j = 2
+    for i in s:
+        try:
+            students_dict[name + ' ' + surname][i] = student[j]
+        except:
+            students_dict[name + ' ' + surname][i] = 'не учавствовал'
+        j += 1
+    number += 1
     student = list(input().split())
 
-print('Всего участников:', len(students_dict))
+m = -1
 for student in students_dict:
-    if sum(students_dict[student]) == m:
-        print(student, 'набрал', m, 'баллов - это максимум')
+    sm = 0
+    for param in students_dict[student]:
+        if students_dict[student][param].isdigit():
+            sm += int(students_dict[student][param])
+    people[student] = sm
+    if sm > m:
+        m = sm
+
+
+for s in people:
+    if people[s] == m:
+        print('----------------------------------------------')
+        print(s, 'набрал максимум -', m)
+        print('id:', students_dict[s]['id'])
+        print('Физика:', students_dict[s]['Физика'])
+        print('Русский:', students_dict[s]['Русский'])
+        print('История:', students_dict[s]['История'])
+        print('----------------------------------------------')
 
